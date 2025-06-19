@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Input</title>
+</head>
+<body>
+  <h3>Voice Search Input</h3>
+  <input id="voiceInput" type="text" placeholder="Speak something..." style="width: 300px; padding: 10px;" />
+  <button onclick="startRecognition()" style="padding: 10px;">🎤 Speak</button>
+
+  <script>
+    function startRecognition() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = function(event) {
+        document.getElementById('voiceInput').value = event.results[0][0].transcript;
+      };
+
+      recognition.onerror = function(event) {
+        alert('Error occurred: ' + event.error);
+      };
+
+      recognition.start();
+    }
+  </script>
+</body>
+</html>
